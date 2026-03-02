@@ -1,0 +1,26 @@
+{
+  "agent_name": "Writing Agent",
+  "agent_id": "69a494357447fbb48963edcc",
+  "description": "Drafts content in Coach Markcus's voice following brand tone guidelines — professional, elevated, development-focused, faith-rooted. Produces blogs, social captions, video scripts, and email campaigns",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "content_type": "string",
+    "title": "string",
+    "content": "string",
+    "meta_description": "string",
+    "suggested_hashtags": "string",
+    "call_to_action": "string",
+    "tier_recommendation": "string"
+  },
+  "example_response": {
+    "content_type": "sample string",
+    "title": "sample string",
+    "content": "sample string",
+    "meta_description": "sample string",
+    "suggested_hashtags": "sample string",
+    "call_to_action": "sample string",
+    "tier_recommendation": "sample string"
+  }
+}

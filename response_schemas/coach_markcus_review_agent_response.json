@@ -1,0 +1,32 @@
+{
+  "agent_name": "Coach Markcus Review Agent",
+  "agent_id": "69a4949056b99c8e0e6ce794",
+  "description": "AI clone of Coach Markcus that evaluates content against brand positioning, tone rules, faith integration principles, and escalation triggers. Flags Tier 1 content for founder approval and auto-approves Tier 2 content that passes brand checks",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "overall_score": "string",
+    "brand_alignment_score": "string",
+    "tone_score": "string",
+    "faith_integration_score": "string",
+    "mission_alignment_score": "string",
+    "specific_feedback": "string",
+    "required_changes": "string",
+    "verdict": "string",
+    "tier_assessment": "string",
+    "escalation_reason": "string"
+  },
+  "example_response": {
+    "overall_score": "sample string",
+    "brand_alignment_score": "sample string",
+    "tone_score": "sample string",
+    "faith_integration_score": "sample string",
+    "mission_alignment_score": "sample string",
+    "specific_feedback": "sample string",
+    "required_changes": "sample string",
+    "verdict": "sample string",
+    "tier_assessment": "sample string",
+    "escalation_reason": "sample string"
+  }
+}

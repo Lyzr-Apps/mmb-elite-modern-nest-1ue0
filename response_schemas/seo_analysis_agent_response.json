@@ -1,0 +1,32 @@
+{
+  "agent_name": "SEO Analysis Agent",
+  "agent_id": "69a494350089711ec4bb3305",
+  "description": "Analyzes content for keyword optimization, readability, search intent alignment, and on-page SEO best practices. Provides actionable recommendations for youth basketball, recruiting, and development-related search terms",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "seo_score": "string",
+    "primary_keywords": "string",
+    "secondary_keywords": "string",
+    "readability_score": "string",
+    "title_tag_suggestion": "string",
+    "meta_description_suggestion": "string",
+    "keyword_recommendations": "string",
+    "content_structure_feedback": "string",
+    "optimization_suggestions": "string",
+    "priority_actions": "string"
+  },
+  "example_response": {
+    "seo_score": "sample string",
+    "primary_keywords": "sample string",
+    "secondary_keywords": "sample string",
+    "readability_score": "sample string",
+    "title_tag_suggestion": "sample string",
+    "meta_description_suggestion": "sample string",
+    "keyword_recommendations": "sample string",
+    "content_structure_feedback": "sample string",
+    "optimization_suggestions": "sample string",
+    "priority_actions": "sample string"
+  }
+}

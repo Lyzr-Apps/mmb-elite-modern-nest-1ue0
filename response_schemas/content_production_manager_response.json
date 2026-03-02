@@ -1,0 +1,30 @@
+{
+  "agent_name": "Content Production Manager",
+  "agent_id": "69a49469f82dad1b234415fe",
+  "description": "Coordinates research and writing sub-agents to produce brand-consistent content (blogs, social posts, scripts, emails). Routes content type to appropriate sub-agent workflow and aggregates final draft.",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "content_type": "string",
+    "title": "string",
+    "research_summary": "string",
+    "content": "string",
+    "meta_description": "string",
+    "suggested_hashtags": "string",
+    "call_to_action": "string",
+    "tier": "string",
+    "review_notes": "string"
+  },
+  "example_response": {
+    "content_type": "sample string",
+    "title": "sample string",
+    "research_summary": "sample string",
+    "content": "sample string",
+    "meta_description": "sample string",
+    "suggested_hashtags": "sample string",
+    "call_to_action": "sample string",
+    "tier": "sample string",
+    "review_notes": "sample string"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "agent_name": "Graphics Generation Agent",
+  "agent_id": "69a4946964135d095c56847b",
+  "description": "Creates brand-compliant visual assets including social media graphics, player spotlights, tournament recaps, commitment announcements, and recruiting materials following MMB Elite's clean, collegiate visual identity",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "graphic_type": "string",
+    "description": "string",
+    "dimensions": "string",
+    "brand_elements_used": "string",
+    "color_palette": "string",
+    "typography_notes": "string",
+    "usage_recommendations": "string"
+  },
+  "example_response": {
+    "graphic_type": "sample string",
+    "description": "sample string",
+    "dimensions": "sample string",
+    "brand_elements_used": "sample string",
+    "color_palette": "sample string",
+    "typography_notes": "sample string",
+    "usage_recommendations": "sample string"
+  },
+  "has_module_outputs": true,
+  "module_outputs_example": {
+    "artifact_files": [
+      {
+        "file_url": "https://example.com/image.png"
+      }
+    ]
+  }
+}

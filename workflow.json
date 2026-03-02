@@ -1,0 +1,74 @@
+{
+  "workflow_id": "mmb-elite-marketing",
+  "name": "MMB Elite Marketing Command Center",
+  "description": "Multi-agent marketing command center for MMB Elite youth basketball development organization. Features a manager-subagent content production pipeline, independent brand review, SEO analysis, and graphics generation agents.",
+  "nodes": [
+    {
+      "id": "input_node",
+      "type": "Input",
+      "label": "Marketing Request",
+      "nodeCategory": "input"
+    },
+    {
+      "id": "manager_agent",
+      "type": "Agent",
+      "label": "Content Production Manager",
+      "nodeCategory": "agent",
+      "agent_id": "69a49469f82dad1b234415fe"
+    },
+    {
+      "id": "research_agent",
+      "type": "Agent",
+      "label": "Research Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69a494147c6b625dd5bacd01"
+    },
+    {
+      "id": "writing_agent",
+      "type": "Agent",
+      "label": "Writing Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69a494357447fbb48963edcc"
+    },
+    {
+      "id": "review_agent",
+      "type": "Agent",
+      "label": "Coach Markcus Review Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69a4949056b99c8e0e6ce794"
+    },
+    {
+      "id": "seo_agent",
+      "type": "Agent",
+      "label": "SEO Analysis Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69a494350089711ec4bb3305"
+    },
+    {
+      "id": "graphics_agent",
+      "type": "Agent",
+      "label": "Graphics Generation Agent",
+      "nodeCategory": "agent",
+      "agent_id": "69a4946964135d095c56847b"
+    },
+    {
+      "id": "output_node",
+      "type": "Output",
+      "label": "Marketing Output",
+      "nodeCategory": "end"
+    }
+  ],
+  "edges": [
+    { "source": "input_node", "target": "manager_agent" },
+    { "source": "manager_agent", "target": "research_agent" },
+    { "source": "manager_agent", "target": "writing_agent" },
+    { "source": "research_agent", "target": "output_node" },
+    { "source": "writing_agent", "target": "output_node" },
+    { "source": "input_node", "target": "review_agent" },
+    { "source": "input_node", "target": "seo_agent" },
+    { "source": "input_node", "target": "graphics_agent" },
+    { "source": "review_agent", "target": "output_node" },
+    { "source": "seo_agent", "target": "output_node" },
+    { "source": "graphics_agent", "target": "output_node" }
+  ]
+}

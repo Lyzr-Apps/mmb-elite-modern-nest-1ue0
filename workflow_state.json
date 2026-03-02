@@ -1,0 +1,59 @@
+{
+  "agents": {
+    "content_production_manager": {
+      "agent_id": "69a49469f82dad1b234415fe",
+      "type": "manager",
+      "name": "Content Production Manager",
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "managed_agents": ["69a494147c6b625dd5bacd01", "69a494357447fbb48963edcc"]
+    },
+    "research_agent": {
+      "agent_id": "69a494147c6b625dd5bacd01",
+      "type": "sub-agent",
+      "name": "Research Agent",
+      "provider": "perplexity",
+      "model": "sonar-pro"
+    },
+    "writing_agent": {
+      "agent_id": "69a494357447fbb48963edcc",
+      "type": "sub-agent",
+      "name": "Writing Agent",
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "rag_id": "69a49414f572c99c0ffc04c0"
+    },
+    "coach_markcus_review_agent": {
+      "agent_id": "69a4949056b99c8e0e6ce794",
+      "type": "independent",
+      "name": "Coach Markcus Review Agent",
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet-latest",
+      "rag_id": "69a49414f572c99c0ffc04c0"
+    },
+    "seo_analysis_agent": {
+      "agent_id": "69a494350089711ec4bb3305",
+      "type": "independent",
+      "name": "SEO Analysis Agent",
+      "provider": "perplexity",
+      "model": "sonar-pro"
+    },
+    "graphics_generation_agent": {
+      "agent_id": "69a4946964135d095c56847b",
+      "type": "independent",
+      "name": "Graphics Generation Agent",
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "rag_id": "69a49414f572c99c0ffc04c0",
+      "has_image_output": true,
+      "image_output_config": {
+        "model": "dall-e-3"
+      }
+    }
+  },
+  "knowledge_base": {
+    "rag_id": "69a49414f572c99c0ffc04c0",
+    "rag_name": "mmbelitebrandknowledgebase1bqq"
+  },
+  "workflow_id": "mmb-elite-marketing"
+}

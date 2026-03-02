@@ -1,0 +1,22 @@
+{
+  "agent_name": "Research Agent",
+  "agent_id": "69a494147c6b625dd5bacd01",
+  "description": "Gathers contextual information about basketball development, recruiting landscape, program updates, and relevant topics to inform content creation",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "key_findings": "string",
+    "relevant_trends": "string",
+    "suggested_angles": "string",
+    "supporting_data": "string",
+    "summary": "string"
+  },
+  "example_response": {
+    "key_findings": "sample string",
+    "relevant_trends": "sample string",
+    "suggested_angles": "sample string",
+    "supporting_data": "sample string",
+    "summary": "sample string"
+  }
+}
