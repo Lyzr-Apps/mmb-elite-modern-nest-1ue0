@@ -14,6 +14,8 @@ import ReviewQueueSection from './sections/ReviewQueueSection'
 import BrandSettingsSection from './sections/BrandSettingsSection'
 import type { ContentItem } from './sections/DashboardSection'
 
+const MMB_LOGO_URL = 'https://asset.lyzr.app/1eGBVs20'
+
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
   { hasError: boolean; error: string }
@@ -32,7 +34,7 @@ class ErrorBoundary extends React.Component<
           <div className="text-center p-8 max-w-md">
             <h2 className="text-xl font-semibold mb-2">Something went wrong</h2>
             <p className="text-muted-foreground mb-4 text-sm">{this.state.error}</p>
-            <button onClick={() => this.setState({ hasError: false, error: '' })} className="px-4 py-2 bg-primary text-primary-foreground text-sm">Try again</button>
+            <button onClick={() => this.setState({ hasError: false, error: '' })} className="px-4 py-2 bg-[#0020FF] text-white text-sm rounded-md hover:bg-[#0018CC]">Try again</button>
           </div>
         </div>
       )
@@ -109,49 +111,61 @@ export default function Page() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-background text-foreground font-sans">
+      <div className="min-h-screen bg-white text-foreground font-sans">
         <div className="flex h-screen overflow-hidden">
-          <aside className={`${sidebarOpen ? 'w-60' : 'w-0 overflow-hidden'} flex-shrink-0 border-r border-border bg-card transition-all duration-200 flex flex-col`}>
-            <div className="p-6">
-              <h1 className="font-serif text-lg font-bold tracking-[-0.02em]">MMB Elite</h1>
-              <p className="text-xs text-muted-foreground mt-0.5 tracking-[-0.02em]">Marketing Command Center</p>
+          {/* Blue Brand Sidebar */}
+          <aside className={`${sidebarOpen ? 'w-64' : 'w-0 overflow-hidden'} flex-shrink-0 bg-[#0020FF] transition-all duration-200 flex flex-col`}>
+            {/* Logo Section */}
+            <div className="p-5 flex items-center gap-3">
+              <img src={MMB_LOGO_URL} alt="MMB Elite" className="h-10 w-10 rounded-md object-contain bg-white/10 p-0.5" />
+              <div>
+                <h1 className="text-white text-base font-bold tracking-tight leading-none">MMB Elite</h1>
+                <p className="text-white/60 text-[10px] font-medium tracking-wide uppercase mt-0.5">Marketing Command Center</p>
+              </div>
             </div>
-            <Separator />
-            <nav className="flex-1 p-3 space-y-1">
+            <div className="mx-4 border-t border-white/15" />
+            {/* Navigation */}
+            <nav className="flex-1 p-3 space-y-0.5 mt-1">
               {NAV_ITEMS.map(item => {
                 const Icon = item.icon
                 const isActive = activeSection === item.key
                 return (
-                  <button key={item.key} onClick={() => setActiveSection(item.key)} className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-colors ${isActive ? 'bg-secondary text-foreground font-medium' : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'}`}>
-                    <Icon className="h-4 w-4 flex-shrink-0" />
-                    <span className="tracking-[-0.02em]">{item.label}</span>
+                  <button key={item.key} onClick={() => setActiveSection(item.key)} className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-md transition-colors ${isActive ? 'bg-white/20 text-white font-medium' : 'text-white/70 hover:text-white hover:bg-white/10'}`}>
+                    <Icon className="h-[18px] w-[18px] flex-shrink-0" />
+                    <span>{item.label}</span>
                   </button>
                 )
               })}
             </nav>
-            <Separator />
+            <div className="mx-4 border-t border-white/15" />
+            {/* Agent Status */}
             <div className="p-4">
               {activeAgentId ? (
                 <div className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-xs text-muted-foreground">Agent processing...</span>
+                  <div className="h-2 w-2 rounded-full bg-[#FF6FF0] animate-pulse" />
+                  <span className="text-xs text-white/70">Agent processing...</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-muted-foreground/30" />
-                  <span className="text-xs text-muted-foreground">All agents ready</span>
+                  <div className="h-2 w-2 rounded-full bg-white/30" />
+                  <span className="text-xs text-white/70">All agents ready</span>
                 </div>
               )}
             </div>
           </aside>
 
+          {/* Main Content */}
           <div className="flex-1 flex flex-col min-w-0">
-            <header className="flex items-center justify-between px-6 py-4 border-b border-border bg-card flex-shrink-0">
+            {/* Header */}
+            <header className="flex items-center justify-between px-6 py-3.5 border-b border-border bg-white flex-shrink-0">
               <div className="flex items-center gap-3">
-                <button onClick={() => setSidebarOpen(prev => !prev)} className="text-muted-foreground hover:text-foreground transition-colors">
+                <button onClick={() => setSidebarOpen(prev => !prev)} className="text-gray-400 hover:text-[#0020FF] transition-colors">
                   {sidebarOpen ? <HiOutlineX className="h-5 w-5" /> : <HiOutlineMenuAlt2 className="h-5 w-5" />}
                 </button>
-                <h2 className="font-serif text-base font-bold tracking-[-0.02em]">
+                {!sidebarOpen && (
+                  <img src={MMB_LOGO_URL} alt="MMB Elite" className="h-7 w-7 rounded object-contain" />
+                )}
+                <h2 className="text-base font-bold text-gray-900">
                   {NAV_ITEMS.find(n => n.key === activeSection)?.label ?? 'Dashboard'}
                 </h2>
               </div>
@@ -160,16 +174,19 @@ export default function Page() {
                   <Switch checked={sampleData} onCheckedChange={setSampleData} id="sample-toggle" />
                   <Label htmlFor="sample-toggle" className="text-xs text-muted-foreground cursor-pointer">Sample Data</Label>
                 </div>
-                <button className="text-muted-foreground hover:text-foreground transition-colors relative">
+                <button className="text-gray-400 hover:text-[#0020FF] transition-colors relative">
                   <HiOutlineBell className="h-5 w-5" />
                   {displayItems.filter(i => i.status === 'In Review').length > 0 && (
-                    <span className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full" />
+                    <span className="absolute -top-1 -right-1 h-3.5 w-3.5 bg-[#FF6FF0] rounded-full flex items-center justify-center">
+                      <span className="text-[9px] text-white font-bold">{displayItems.filter(i => i.status === 'In Review').length}</span>
+                    </span>
                   )}
                 </button>
               </div>
             </header>
 
-            <main className="flex-1 overflow-y-auto p-6 lg:p-8">
+            {/* Content Area */}
+            <main className="flex-1 overflow-y-auto p-6 lg:p-8 bg-gray-50/50">
               {activeSection === 'dashboard' && (
                 <DashboardSection contentItems={displayItems} graphicsCount={sampleData ? 3 + graphicsCount : graphicsCount} onNavigate={handleNavigate} />
               )}

@@ -24,13 +24,13 @@ function renderMarkdown(text: string) {
   return (
     <div className="space-y-2">
       {text.split('\n').map((line, i) => {
-        if (line.startsWith('### ')) return <h4 key={i} className="font-semibold text-sm mt-3 mb-1">{line.slice(4)}</h4>
-        if (line.startsWith('## ')) return <h3 key={i} className="font-semibold text-base mt-3 mb-1">{line.slice(3)}</h3>
-        if (line.startsWith('# ')) return <h2 key={i} className="font-bold text-lg mt-4 mb-2">{line.slice(2)}</h2>
-        if (line.startsWith('- ') || line.startsWith('* ')) return <li key={i} className="ml-4 list-disc text-sm">{formatInline(line.slice(2))}</li>
-        if (/^\d+\.\s/.test(line)) return <li key={i} className="ml-4 list-decimal text-sm">{formatInline(line.replace(/^\d+\.\s/, ''))}</li>
+        if (line.startsWith('### ')) return <h4 key={i} className="font-semibold text-sm mt-3 mb-1 text-gray-900">{line.slice(4)}</h4>
+        if (line.startsWith('## ')) return <h3 key={i} className="font-semibold text-base mt-3 mb-1 text-gray-900">{line.slice(3)}</h3>
+        if (line.startsWith('# ')) return <h2 key={i} className="font-bold text-lg mt-4 mb-2 text-gray-900">{line.slice(2)}</h2>
+        if (line.startsWith('- ') || line.startsWith('* ')) return <li key={i} className="ml-4 list-disc text-sm text-gray-700">{formatInline(line.slice(2))}</li>
+        if (/^\d+\.\s/.test(line)) return <li key={i} className="ml-4 list-decimal text-sm text-gray-700">{formatInline(line.replace(/^\d+\.\s/, ''))}</li>
         if (!line.trim()) return <div key={i} className="h-1" />
-        return <p key={i} className="text-sm">{formatInline(line)}</p>
+        return <p key={i} className="text-sm text-gray-700">{formatInline(line)}</p>
       })}
     </div>
   )
@@ -39,7 +39,7 @@ function renderMarkdown(text: string) {
 function formatInline(text: string) {
   const parts = text.split(/\*\*(.*?)\*\*/g)
   if (parts.length === 1) return text
-  return parts.map((part, i) => i % 2 === 1 ? <strong key={i} className="font-semibold">{part}</strong> : part)
+  return parts.map((part, i) => i % 2 === 1 ? <strong key={i} className="font-semibold text-gray-900">{part}</strong> : part)
 }
 
 export default function ReviewQueueSection({ contentItems, onContentUpdated, setActiveAgent }: ReviewQueueSectionProps) {
@@ -48,7 +48,6 @@ export default function ReviewQueueSection({ contentItems, onContentUpdated, set
   const [errorMsg, setErrorMsg] = useState('')
 
   const reviewableItems = contentItems.filter(i => i.status === 'Draft' || i.status === 'In Review')
-  const reviewedItems = contentItems.filter(i => i.reviewResult)
   const selectedItem = contentItems.find(i => i.id === selectedItemId)
 
   const handleRunReview = async (item: ContentItem) => {
@@ -86,53 +85,54 @@ export default function ReviewQueueSection({ contentItems, onContentUpdated, set
   }
 
   const tierColor = (tier: string) => {
-    if (tier?.includes('1')) return 'bg-red-900/30 text-red-400'
-    if (tier?.includes('2')) return 'bg-yellow-900/30 text-yellow-400'
-    return 'bg-green-900/30 text-green-400'
+    if (tier?.includes('1')) return 'bg-red-50 text-red-600 border border-red-200'
+    if (tier?.includes('2')) return 'bg-amber-50 text-amber-700 border border-amber-200'
+    return 'bg-emerald-50 text-emerald-700 border border-emerald-200'
   }
 
   const verdictColor = (verdict: string) => {
     const v = (verdict ?? '').toUpperCase()
-    if (v.includes('APPROVED')) return 'bg-green-900/30 text-green-400'
-    if (v.includes('REVISION')) return 'bg-yellow-900/30 text-yellow-400'
-    return 'bg-red-900/30 text-red-400'
+    if (v.includes('APPROVED')) return 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+    if (v.includes('REVISION')) return 'bg-amber-50 text-amber-700 border border-amber-200'
+    return 'bg-red-50 text-red-600 border border-red-200'
   }
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-serif text-2xl font-bold tracking-[-0.02em]">Review Queue</h1>
-        <p className="text-muted-foreground text-sm tracking-[-0.02em] leading-[1.7]">Review and approve content with Coach Markcus AI</p>
+        <h1 className="text-2xl font-bold text-gray-900">Review Queue</h1>
+        <p className="text-gray-500 text-sm mt-1">Review and approve content with Coach Markcus AI</p>
       </div>
 
-      {errorMsg && <p className="text-sm text-destructive">{errorMsg}</p>}
+      {errorMsg && <p className="text-sm text-red-600">{errorMsg}</p>}
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        {/* Queue List */}
         <div className="lg:col-span-2 space-y-4">
-          <Card className="border border-border bg-card">
+          <Card className="bg-white border border-gray-200 shadow-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="font-serif text-base font-bold">Pending Review ({reviewableItems.length})</CardTitle>
+              <CardTitle className="text-base font-bold text-gray-900">Pending Review ({reviewableItems.length})</CardTitle>
             </CardHeader>
             <CardContent>
               <ScrollArea className="h-[500px]">
                 {reviewableItems.length === 0 ? (
                   <div className="flex items-center justify-center py-10">
-                    <p className="text-sm text-muted-foreground">No content items pending review. Generate content in Content Studio first.</p>
+                    <p className="text-sm text-gray-400">No content items pending review. Generate content in Content Studio first.</p>
                   </div>
                 ) : (
                   <div className="space-y-2">
                     {reviewableItems.map(item => (
-                      <div key={item.id} className={`border border-border p-4 cursor-pointer transition-colors ${selectedItemId === item.id ? 'bg-secondary/50 border-foreground/30' : 'hover:bg-secondary/30'}`} onClick={() => setSelectedItemId(item.id)}>
+                      <div key={item.id} className={`border p-4 cursor-pointer transition-colors rounded-md ${selectedItemId === item.id ? 'bg-[#0020FF]/5 border-[#0020FF]/30' : 'border-gray-200 hover:bg-gray-50'}`} onClick={() => setSelectedItemId(item.id)}>
                         <div className="flex items-center justify-between mb-2">
-                          <p className="text-sm font-medium truncate max-w-[200px]">{item.title || 'Untitled'}</p>
+                          <p className="text-sm font-medium text-gray-900 truncate max-w-[200px]">{item.title || 'Untitled'}</p>
                           <Badge className={`text-[10px] ${tierColor(item.tier)}`}>{item.tier || 'Tier 3'}</Badge>
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="text-xs">{item.type}</Badge>
-                            <span className="text-xs text-muted-foreground">{item.date}</span>
+                            <Badge variant="outline" className="text-xs border-gray-200 text-gray-600">{item.type}</Badge>
+                            <span className="text-xs text-gray-400">{item.date}</span>
                           </div>
-                          <Button variant="outline" size="sm" className="border-border text-xs h-7" onClick={(e) => { e.stopPropagation(); handleRunReview(item) }} disabled={reviewLoading === item.id}>
+                          <Button variant="outline" size="sm" className="border-gray-200 text-xs h-7 hover:bg-[#0020FF]/5 hover:text-[#0020FF] hover:border-[#0020FF]/30" onClick={(e) => { e.stopPropagation(); handleRunReview(item) }} disabled={reviewLoading === item.id}>
                             {reviewLoading === item.id ? <AiOutlineLoading3Quarters className="h-3 w-3 animate-spin" /> : <HiOutlineShieldCheck className="h-3 w-3" />}
                             <span className="ml-1">Review</span>
                           </Button>
@@ -146,39 +146,40 @@ export default function ReviewQueueSection({ contentItems, onContentUpdated, set
           </Card>
         </div>
 
+        {/* Review Details */}
         <div className="lg:col-span-3">
-          <Card className="border border-border bg-card">
+          <Card className="bg-white border border-gray-200 shadow-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="font-serif text-base font-bold">Review Details</CardTitle>
+              <CardTitle className="text-base font-bold text-gray-900">Review Details</CardTitle>
             </CardHeader>
             <CardContent>
               {!selectedItem ? (
                 <div className="flex flex-col items-center justify-center py-16">
-                  <HiOutlineShieldCheck className="h-10 w-10 text-muted-foreground mb-3" />
-                  <p className="text-sm text-muted-foreground">Select an item from the queue to view or run a review.</p>
+                  <HiOutlineShieldCheck className="h-10 w-10 text-gray-300 mb-3" />
+                  <p className="text-sm text-gray-400">Select an item from the queue to view or run a review.</p>
                 </div>
               ) : (
                 <ScrollArea className="h-[500px]">
                   <div className="space-y-6 pr-4">
                     <div>
-                      <h3 className="font-serif text-lg font-bold">{selectedItem.title || 'Untitled'}</h3>
+                      <h3 className="text-lg font-bold text-gray-900">{selectedItem.title || 'Untitled'}</h3>
                       <div className="flex items-center gap-2 mt-2">
-                        <Badge variant="outline">{selectedItem.type}</Badge>
+                        <Badge variant="outline" className="border-gray-200 text-gray-600">{selectedItem.type}</Badge>
                         <Badge className={tierColor(selectedItem.tier)}>{selectedItem.tier || 'Tier 3'}</Badge>
-                        <span className="text-xs text-muted-foreground">{selectedItem.date}</span>
+                        <span className="text-xs text-gray-400">{selectedItem.date}</span>
                       </div>
                     </div>
 
                     {selectedItem.reviewResult ? (
                       <>
-                        <Separator />
+                        <Separator className="bg-gray-100" />
                         <div className="flex items-center gap-4 flex-wrap">
                           <Badge className={`text-sm px-3 py-1 ${verdictColor(selectedItem.reviewResult?.verdict ?? '')}`}>
                             {selectedItem.reviewResult?.verdict ?? 'Pending'}
                           </Badge>
                           <div className="text-center">
-                            <p className="text-xs text-muted-foreground">Overall</p>
-                            <p className="text-2xl font-serif font-bold">{selectedItem.reviewResult?.overall_score ?? '--'}</p>
+                            <p className="text-xs text-gray-400">Overall</p>
+                            <p className="text-2xl font-bold text-gray-900">{selectedItem.reviewResult?.overall_score ?? '--'}</p>
                           </div>
                         </div>
 
@@ -189,61 +190,61 @@ export default function ReviewQueueSection({ contentItems, onContentUpdated, set
                             { label: 'Faith Integration', value: selectedItem.reviewResult?.faith_integration_score },
                             { label: 'Mission Alignment', value: selectedItem.reviewResult?.mission_alignment_score },
                           ].map(s => (
-                            <div key={s.label} className="bg-secondary/50 border border-border p-3">
-                              <p className="text-xs text-muted-foreground">{s.label}</p>
-                              <p className="text-lg font-serif font-bold">{s.value ?? '--'}</p>
+                            <div key={s.label} className="bg-gray-50 border border-gray-100 p-3 rounded-md">
+                              <p className="text-xs text-gray-500">{s.label}</p>
+                              <p className="text-lg font-bold text-gray-900">{s.value ?? '--'}</p>
                             </div>
                           ))}
                         </div>
 
                         {selectedItem.reviewResult?.specific_feedback && (
                           <div>
-                            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Specific Feedback</p>
+                            <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Specific Feedback</p>
                             {renderMarkdown(selectedItem.reviewResult.specific_feedback)}
                           </div>
                         )}
 
                         {selectedItem.reviewResult?.required_changes && (
                           <div>
-                            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Required Changes</p>
+                            <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Required Changes</p>
                             {renderMarkdown(selectedItem.reviewResult.required_changes)}
                           </div>
                         )}
 
                         {selectedItem.reviewResult?.tier_assessment && (
                           <div>
-                            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Tier Assessment</p>
-                            <p className="text-sm">{selectedItem.reviewResult.tier_assessment}</p>
+                            <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Tier Assessment</p>
+                            <p className="text-sm text-gray-700">{selectedItem.reviewResult.tier_assessment}</p>
                           </div>
                         )}
 
                         {selectedItem.reviewResult?.escalation_reason && (
                           <div>
-                            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Escalation Reason</p>
-                            <p className="text-sm text-destructive">{selectedItem.reviewResult.escalation_reason}</p>
+                            <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Escalation Reason</p>
+                            <p className="text-sm text-red-600">{selectedItem.reviewResult.escalation_reason}</p>
                           </div>
                         )}
 
-                        <Separator />
+                        <Separator className="bg-gray-100" />
 
                         <div className="flex gap-3">
-                          <Button onClick={() => handleApprove(selectedItem.id)} className="bg-green-900/30 text-green-400 hover:bg-green-900/50 border border-green-800/50">
+                          <Button onClick={() => handleApprove(selectedItem.id)} className="bg-emerald-600 text-white hover:bg-emerald-700">
                             <HiOutlineCheckCircle className="mr-2 h-4 w-4" /> Approve
                           </Button>
-                          <Button onClick={() => handleReject(selectedItem.id)} variant="outline" className="border-destructive text-destructive hover:bg-destructive/10">
+                          <Button onClick={() => handleReject(selectedItem.id)} variant="outline" className="border-red-200 text-red-600 hover:bg-red-50">
                             <HiOutlineXCircle className="mr-2 h-4 w-4" /> Send Back
                           </Button>
-                          <Button variant="outline" className="border-yellow-700 text-yellow-400 hover:bg-yellow-900/20">
+                          <Button variant="outline" className="border-amber-200 text-amber-700 hover:bg-amber-50">
                             <HiOutlineExclamation className="mr-2 h-4 w-4" /> Escalate
                           </Button>
                         </div>
                       </>
                     ) : (
                       <>
-                        <Separator />
-                        <div className="bg-secondary/50 border border-border p-4">
-                          <p className="text-sm text-muted-foreground">No review has been run for this item yet.</p>
-                          <Button variant="outline" size="sm" className="mt-3 border-border" onClick={() => handleRunReview(selectedItem)} disabled={reviewLoading === selectedItem.id}>
+                        <Separator className="bg-gray-100" />
+                        <div className="bg-gray-50 border border-gray-100 p-4 rounded-md">
+                          <p className="text-sm text-gray-500">No review has been run for this item yet.</p>
+                          <Button variant="outline" size="sm" className="mt-3 border-gray-200 hover:bg-[#0020FF]/5 hover:text-[#0020FF]" onClick={() => handleRunReview(selectedItem)} disabled={reviewLoading === selectedItem.id}>
                             {reviewLoading === selectedItem.id ? <><AiOutlineLoading3Quarters className="mr-2 h-3 w-3 animate-spin" /> Reviewing...</> : <><HiOutlineShieldCheck className="mr-2 h-3 w-3" /> Run Brand Review</>}
                           </Button>
                         </div>

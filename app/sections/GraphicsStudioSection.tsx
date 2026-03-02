@@ -107,20 +107,21 @@ export default function GraphicsStudioSection({ onGraphicCreated, setActiveAgent
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-serif text-2xl font-bold tracking-[-0.02em]">Graphics Studio</h1>
-        <p className="text-muted-foreground text-sm tracking-[-0.02em] leading-[1.7]">Generate brand-compliant visual assets</p>
+        <h1 className="text-2xl font-bold text-gray-900">Graphics Studio</h1>
+        <p className="text-gray-500 text-sm mt-1">Generate brand-compliant visual assets</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border border-border bg-card">
+        {/* Graphic Brief */}
+        <Card className="bg-white border border-gray-200 shadow-sm">
           <CardHeader className="pb-3">
-            <CardTitle className="font-serif text-base font-bold">Graphic Brief</CardTitle>
+            <CardTitle className="text-base font-bold text-gray-900">Graphic Brief</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5 block">Graphic Type *</Label>
+              <Label className="text-xs uppercase tracking-wider text-gray-500 mb-1.5 block">Graphic Type *</Label>
               <Select value={formData.graphicType} onValueChange={(v) => setFormData(prev => ({ ...prev, graphicType: v }))}>
-                <SelectTrigger className="border-border"><SelectValue placeholder="Select type" /></SelectTrigger>
+                <SelectTrigger className="border-gray-200"><SelectValue placeholder="Select type" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Social Media Post">Social Media Post</SelectItem>
                   <SelectItem value="Player Spotlight">Player Spotlight</SelectItem>
@@ -131,13 +132,13 @@ export default function GraphicsStudioSection({ onGraphicCreated, setActiveAgent
               </Select>
             </div>
             <div>
-              <Label className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5 block">Description *</Label>
-              <Textarea placeholder="Describe the graphic you want to create" value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} rows={4} className="border-border" />
+              <Label className="text-xs uppercase tracking-wider text-gray-500 mb-1.5 block">Description *</Label>
+              <Textarea placeholder="Describe the graphic you want to create" value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} rows={4} className="border-gray-200" />
             </div>
             <div>
-              <Label className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5 block">Dimensions</Label>
+              <Label className="text-xs uppercase tracking-wider text-gray-500 mb-1.5 block">Dimensions</Label>
               <Select value={formData.dimensions} onValueChange={(v) => setFormData(prev => ({ ...prev, dimensions: v }))}>
-                <SelectTrigger className="border-border"><SelectValue placeholder="Select dimensions" /></SelectTrigger>
+                <SelectTrigger className="border-gray-200"><SelectValue placeholder="Select dimensions" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="1080x1080">1080 x 1080 (Square)</SelectItem>
                   <SelectItem value="1920x1080">1920 x 1080 (Landscape)</SelectItem>
@@ -147,106 +148,107 @@ export default function GraphicsStudioSection({ onGraphicCreated, setActiveAgent
               </Select>
             </div>
             <div>
-              <Label className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5 block">Brand Elements</Label>
+              <Label className="text-xs uppercase tracking-wider text-gray-500 mb-1.5 block">Brand Elements</Label>
               <div className="space-y-2">
                 {['Logo', 'Team Colors', 'Program Name'].map(el => (
                   <div key={el} className="flex items-center gap-2">
                     <Checkbox checked={formData.brandElements.includes(el)} onCheckedChange={() => toggleBrandElement(el)} id={`brand-${el}`} />
-                    <label htmlFor={`brand-${el}`} className="text-sm cursor-pointer">{el}</label>
+                    <label htmlFor={`brand-${el}`} className="text-sm text-gray-700 cursor-pointer">{el}</label>
                   </div>
                 ))}
               </div>
             </div>
-            <Button onClick={handleGenerate} disabled={loading || !formData.graphicType || !formData.description} className="w-full bg-foreground text-background hover:bg-foreground/90">
+            <Button onClick={handleGenerate} disabled={loading || !formData.graphicType || !formData.description} className="w-full bg-[#FF6FF0] text-white hover:bg-[#E560D8]">
               {loading ? <><AiOutlineLoading3Quarters className="mr-2 h-4 w-4 animate-spin" /> Generating...</> : 'Generate Graphic'}
             </Button>
-            {errorMsg && <p className="text-sm text-destructive">{errorMsg}</p>}
-            {statusMsg && <p className="text-sm text-green-400">{statusMsg}</p>}
+            {errorMsg && <p className="text-sm text-red-600">{errorMsg}</p>}
+            {statusMsg && <p className="text-sm text-emerald-600">{statusMsg}</p>}
           </CardContent>
         </Card>
 
+        {/* Preview */}
         <div className="space-y-6">
-          <Card className="border border-border bg-card">
+          <Card className="bg-white border border-gray-200 shadow-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="font-serif text-base font-bold">Preview</CardTitle>
+              <CardTitle className="text-base font-bold text-gray-900">Preview</CardTitle>
             </CardHeader>
             <CardContent>
               {loading ? (
                 <div className="flex items-center justify-center py-16">
-                  <AiOutlineLoading3Quarters className="h-6 w-6 animate-spin text-muted-foreground" />
-                  <span className="ml-3 text-sm text-muted-foreground">Generating graphic...</span>
+                  <AiOutlineLoading3Quarters className="h-6 w-6 animate-spin text-[#FF6FF0]" />
+                  <span className="ml-3 text-sm text-gray-500">Generating graphic...</span>
                 </div>
               ) : currentGraphic ? (
                 <div className="space-y-4">
                   {currentGraphic.imageUrl ? (
-                    <div className="border border-border overflow-hidden">
+                    <div className="border border-gray-200 overflow-hidden rounded-md">
                       <img src={currentGraphic.imageUrl} alt={currentGraphic.description} className="w-full h-auto object-contain max-h-[400px]" />
                     </div>
                   ) : (
-                    <div className="border border-border flex items-center justify-center h-[200px]">
-                      <p className="text-sm text-muted-foreground">No image available</p>
+                    <div className="border border-gray-200 flex items-center justify-center h-[200px] rounded-md bg-gray-50">
+                      <p className="text-sm text-gray-400">No image available</p>
                     </div>
                   )}
                   <div className="flex gap-2 flex-wrap">
-                    <Badge variant="outline">{currentGraphic.graphicType}</Badge>
-                    <Badge variant="outline">{currentGraphic.dimensions || 'N/A'}</Badge>
+                    <Badge className="bg-[#FF6FF0]/10 text-[#FF6FF0] border border-[#FF6FF0]/20">{currentGraphic.graphicType}</Badge>
+                    <Badge variant="outline" className="border-gray-200 text-gray-600">{currentGraphic.dimensions || 'N/A'}</Badge>
                   </div>
                   {currentGraphic.imageUrl && (
-                    <Button variant="outline" className="border-border" onClick={() => window.open(currentGraphic.imageUrl, '_blank')}>
+                    <Button variant="outline" className="border-gray-200 text-gray-700 hover:bg-[#0020FF]/5 hover:text-[#0020FF]" onClick={() => window.open(currentGraphic.imageUrl, '_blank')}>
                       <HiOutlineDownload className="mr-2 h-4 w-4" /> Download
                     </Button>
                   )}
                   <div className="space-y-3">
                     {currentGraphic.brandElements && (
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Brand Elements</p>
-                        <p className="text-sm">{currentGraphic.brandElements}</p>
+                        <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Brand Elements</p>
+                        <p className="text-sm text-gray-700">{currentGraphic.brandElements}</p>
                       </div>
                     )}
                     {currentGraphic.colorPalette && (
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Color Palette</p>
-                        <p className="text-sm">{currentGraphic.colorPalette}</p>
+                        <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Color Palette</p>
+                        <p className="text-sm text-gray-700">{currentGraphic.colorPalette}</p>
                       </div>
                     )}
                     {currentGraphic.typographyNotes && (
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Typography Notes</p>
-                        <p className="text-sm">{currentGraphic.typographyNotes}</p>
+                        <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Typography Notes</p>
+                        <p className="text-sm text-gray-700">{currentGraphic.typographyNotes}</p>
                       </div>
                     )}
                     {currentGraphic.usageRecommendations && (
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Usage Recommendations</p>
-                        <p className="text-sm">{currentGraphic.usageRecommendations}</p>
+                        <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Usage Recommendations</p>
+                        <p className="text-sm text-gray-700">{currentGraphic.usageRecommendations}</p>
                       </div>
                     )}
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center py-16">
-                  <HiOutlinePhotograph className="h-10 w-10 text-muted-foreground mb-3" />
-                  <p className="text-sm text-muted-foreground">Describe your graphic and generate to see a preview.</p>
+                  <HiOutlinePhotograph className="h-10 w-10 text-gray-300 mb-3" />
+                  <p className="text-sm text-gray-400">Describe your graphic and generate to see a preview.</p>
                 </div>
               )}
             </CardContent>
           </Card>
 
           {gallery.length > 0 && (
-            <Card className="border border-border bg-card">
+            <Card className="bg-white border border-gray-200 shadow-sm">
               <CardHeader className="pb-3">
-                <CardTitle className="font-serif text-base font-bold">Gallery ({gallery.length})</CardTitle>
+                <CardTitle className="text-base font-bold text-gray-900">Gallery ({gallery.length})</CardTitle>
               </CardHeader>
               <CardContent>
                 <ScrollArea className="h-[200px]">
                   <div className="grid grid-cols-3 gap-2">
                     {gallery.map(g => (
-                      <button key={g.id} onClick={() => setCurrentGraphic(g)} className="border border-border overflow-hidden hover:border-foreground/40 transition-colors">
+                      <button key={g.id} onClick={() => setCurrentGraphic(g)} className="border border-gray-200 overflow-hidden rounded-md hover:border-[#FF6FF0] transition-colors">
                         {g.imageUrl ? (
                           <img src={g.imageUrl} alt={g.graphicType} className="w-full h-20 object-cover" />
                         ) : (
-                          <div className="w-full h-20 bg-secondary flex items-center justify-center">
-                            <HiOutlinePhotograph className="h-5 w-5 text-muted-foreground" />
+                          <div className="w-full h-20 bg-gray-50 flex items-center justify-center">
+                            <HiOutlinePhotograph className="h-5 w-5 text-gray-300" />
                           </div>
                         )}
                       </button>
